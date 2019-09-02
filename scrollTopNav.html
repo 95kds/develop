@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        html,body{margin:0;padding:0}
+        .nav{position: fixed;top:0;left:0;width:100%;font-size:0;}
+        .nav ul{padding:0;}
+        .nav ul li{display:inline-block;width:25%;font-size:16px;text-align:center;line-height:60px;background-color:#fff;}
+        .nav ul li.on{background: #000;color:#fff;}
+        .section{height:800px;}
+        .section1{background-color:antiquewhite;padding-top:60px;}
+        .section2{background-color:aqua}
+        .section3{background-color:red}
+        .section4{background-color:tan}
+</style>
+</head>
+<body>
+    
+    <div class="nav">
+        <ul>
+            <li class="v1">메뉴1</li>
+            <li class="v2">메뉴2</li>
+            <li class="v3">메뉴3</li>
+            <li class="v4">메뉴4</li>
+        </ul>
+    </div>
+    <section class="section section1">
+            section1
+    </section>
+    <section class="section section2">
+            section2
+    </section>
+    <section class="section section3">
+            section3
+    </section>
+    <section class="section section4">
+            section4
+    </section>
+  
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+        
+        const section = $('.section');
+        var nav_li = $('.nav ul li');
+        var section_length = section.length;
+        var arrNumber = new Array();
+        
+        //스크롤 시 메뉴 
+        $(window).scroll(function(){
+
+            var this_scroll = $(window).scrollTop();
+            var scrollBottom = $("body").height() - $(window).height() - $(window).scrollTop();
+
+            for(var i=0; i < section_length ;i++){
+                
+                arrNumber[i] = section.eq(i).offset().top;
+                if(this_scroll >= arrNumber[i]){
+                    nav_li.removeClass('on');
+                    nav_li.eq(i).addClass('on');
+
+                    if(scrollBottom == 0){
+                        nav_li.removeClass('on');
+                        nav_li.eq(-1).addClass('on');
+                    }
+                }
+            }
+        });
+
+        //탭클릭 시 메뉴
+        nav_li.on('click',function(){
+            var this_index = $(this).index();
+            var sec_top = section.eq(this_index).offset().top;
+            $('html,body').animate({scrollTop:sec_top});
+        });
+
+    </script>
+
+</body>
+</html>
